@@ -32,6 +32,8 @@ ball.shape("circle")
 ball.color("white")
 ball.penup()
 ball.goto(0, 0)  # start location
+ball.dx = 0.1
+ball.dy = 0.1
 
 
 # Functions
@@ -75,3 +77,34 @@ window.onkeypress(paddle_r_down, "Down")
 
 while True:
     window.update()
+
+    # Movement of the ball
+    ball.setx(ball.xcor() + ball.dx)
+    ball.sety(ball.ycor() + ball.dy)
+
+    if ball.ycor() > (constatnt.SCREEN_HEIGHT / 2 - 10):
+        ball.sety(constatnt.SCREEN_HEIGHT/2 - 10)
+        ball.dy *= -1
+
+    if ball.ycor() < (-constatnt.SCREEN_HEIGHT / 2 + 10):
+        ball.sety(-constatnt.SCREEN_HEIGHT/2 + 10)
+        ball.dy *= -1
+
+    if ball.xcor() > 390:
+        ball.sety(0)
+        ball.setx(0)
+        ball.dx *= -1
+
+    if ball.xcor() < -390:
+        ball.sety(0)
+        ball.setx(0)
+        ball.dx *= -1
+
+    # paddle colision
+    if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < paddle_r.ycor() + 50 and ball.ycor() > paddle_r.ycor() - 50):   # right paddle
+        ball.setx(340)
+        ball.dx *= -1
+    if (ball.xcor() < -340 and ball.xcor() > -350) and (ball.ycor() < paddle_l.ycor() + 50 and ball.ycor() > paddle_l.ycor() - 50): # left paddle
+        ball.setx(-340)
+        ball.dx *= -1
+
