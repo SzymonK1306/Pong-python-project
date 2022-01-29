@@ -1,5 +1,6 @@
 import turtle
 import constatnt
+import winsound
 
 scoreA = 0
 scoreB = 0
@@ -97,14 +98,18 @@ while True:
         ball.setx(ball.xcor() + ball.dx)
         ball.sety(ball.ycor() + ball.dy)
 
+        # bounce ball
         if ball.ycor() > (constatnt.SCREEN_HEIGHT / 2 - 10):
             ball.sety(constatnt.SCREEN_HEIGHT / 2 - 10)
             ball.dy *= -1
+            winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
 
         if ball.ycor() < (-constatnt.SCREEN_HEIGHT / 2 + 10):
             ball.sety(-constatnt.SCREEN_HEIGHT / 2 + 10)
             ball.dy *= -1
+            winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
 
+        # get score
         if ball.xcor() > 390:
             ball.sety(0)
             ball.setx(0)
@@ -126,18 +131,15 @@ while True:
                 ball.ycor() < paddle_r.ycor() + 50 and ball.ycor() > paddle_r.ycor() - 50):  # right paddle
             ball.setx(340)
             ball.dx *= -1
+            winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
         if (ball.xcor() < -340 and ball.xcor() > -350) and (
                 ball.ycor() < paddle_l.ycor() + 50 and ball.ycor() > paddle_l.ycor() - 50):  # left paddle
             ball.setx(-340)
             ball.dx *= -1
+            winsound.PlaySound("bounce.wav", winsound.SND_ASYNC)
 
     pen.goto(0, 0)
     pen.clear()
     pen.write(f"Player A: {scoreA} Player B: {scoreB}", align="center", font=("Arial", 24, "bold"))
 
-    if scoreB > scoreA:
-        pen.goto(0, -50)
-        pen.write(f"Player B is winning", align="center", font=("Arial", 24, "bold"))
-    else:
-        pen.goto(0, -50)
-        pen.write(f"Player A is winning", align="center", font=("Arial", 24, "bold"))
+
